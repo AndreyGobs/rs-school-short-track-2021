@@ -20,8 +20,25 @@
  * }
  *
  */
-function getDNSStats(/* domains */) {
-  throw new Error('Not implemented');
+  domains.forEach((domain) => {
+    // 'code.yandex.ru' -> 'ru', 'yandex', 'code'
+    const subDomains = domain.split('.').map((str) => `.${str}`).reverse();
+    // 'ru', 'yandex', 'code' -> '.ru', '.ru.yandex', '.ru.yandex.music'
+    for (let i = 0; i < subDomains.length; i++) {
+      const concatSubDomains = subDomains.slice(0, i + 1);
+      domainArrays.push(concatSubDomains.join(''));
+    }
+  });
+
+  domainArrays.forEach((subDomain) => {
+    if (typeof result[subDomain] !== 'undefined') {
+      result[subDomain] = (+result[subDomain]) + 1;
+    } else {
+      result[subDomain] = 1;
+    }
+  });
+
+  return result;
 }
 
 module.exports = getDNSStats;
