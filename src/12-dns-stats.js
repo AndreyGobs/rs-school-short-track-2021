@@ -20,6 +20,13 @@
  * }
  *
  */
+function getDNSStats(domains) {
+  const domainArrays = [];
+  const result = {};
+
+  // 'code.yandex.ru' -> '.ru', '.ru.yandex', '.ru.yandex.code'
+  // 'music.yandex.ru' -> '.ru', '.ru.yandex', '.ru.yandex.music'
+  // 'yandex.ru' -> '.ru', '.ru.yandex'
   domains.forEach((domain) => {
     // 'code.yandex.ru' -> 'ru', 'yandex', 'code'
     const subDomains = domain.split('.').map((str) => `.${str}`).reverse();
